@@ -11,6 +11,9 @@ class SourcingPhase {
         this.objectsFound = 0;
         this.totalObjects = 0;
 
+        // Clutter elements (generated once per scene)
+        this.clutterElements = [];
+
         // Click handling
         this.clickHandlers = [];
     }
@@ -72,9 +75,35 @@ class SourcingPhase {
         // Mark all objects as not found
         scene.objects.forEach(obj => obj.found = false);
 
+        // Generate clutter elements once for this scene
+        this.generateClutterElements();
+
         // Update UI
         this.updateSceneUI();
         this.render();
+    }
+
+    // Generate clutter elements once per scene
+    generateClutterElements() {
+        this.clutterElements = [];
+        const clutterCount = 30;
+
+        for (let i = 0; i < clutterCount; i++) {
+            // Avoid top and bottom UI areas
+            const x = Math.random() * this.canvas.width;
+            const y = 100 + Math.random() * (this.canvas.height - 200); // Keep away from UI bars
+            const size = 10 + Math.random() * 30;
+            const shade = Math.floor(Math.random() * 100);
+            const isRect = Math.random() > 0.5;
+
+            this.clutterElements.push({
+                x: x,
+                y: y,
+                size: size,
+                shade: shade,
+                isRect: isRect
+            });
+        }
     }
 
     // Render the scene
@@ -101,24 +130,17 @@ class SourcingPhase {
 
     // Draw background clutter
     drawClutter() {
-        const clutterCount = 30;
         this.ctx.globalAlpha = 0.15; // Reduced opacity so objects stand out more
 
-        for (let i = 0; i < clutterCount; i++) {
-            // Avoid top and bottom UI areas
-            const x = Math.random() * this.canvas.width;
-            const y = 100 + Math.random() * (this.canvas.height - 200); // Keep away from UI bars
-            const size = 10 + Math.random() * 30;
-            const shade = Math.floor(Math.random() * 100);
+        // Draw pre-generated clutter elements
+        for (let clutter of this.clutterElements) {
+            this.ctx.fillStyle = `rgb(${clutter.shade}, ${clutter.shade}, ${clutter.shade})`;
 
-            this.ctx.fillStyle = `rgb(${shade}, ${shade}, ${shade})`;
-
-            // Random shapes
-            if (Math.random() > 0.5) {
-                this.ctx.fillRect(x, y, size, size);
+            if (clutter.isRect) {
+                this.ctx.fillRect(clutter.x, clutter.y, clutter.size, clutter.size);
             } else {
                 this.ctx.beginPath();
-                this.ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+                this.ctx.arc(clutter.x, clutter.y, clutter.size / 2, 0, Math.PI * 2);
                 this.ctx.fill();
             }
         }

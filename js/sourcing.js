@@ -86,24 +86,67 @@ class SourcingPhase {
     // Generate clutter elements once per scene
     generateClutterElements() {
         this.clutterElements = [];
-        const clutterCount = 30;
+        const clutterCount = 100; // Increased from 30 to create real clutter
+
+        // Get scene background to tint clutter colors appropriately
+        const sceneHue = this.getSceneColorHue();
 
         for (let i = 0; i < clutterCount; i++) {
             // Avoid top and bottom UI areas
             const x = Math.random() * this.canvas.width;
             const y = 100 + Math.random() * (this.canvas.height - 200); // Keep away from UI bars
-            const size = 10 + Math.random() * 30;
-            const shade = Math.floor(Math.random() * 100);
-            const isRect = Math.random() > 0.5;
+            const size = 15 + Math.random() * 60; // Larger range: 15-75px instead of 10-40px
+            const shapeType = Math.floor(Math.random() * 4); // 4 different shape types
+            const alpha = 0.3 + Math.random() * 0.5; // Varying opacity 0.3-0.8
+
+            // Generate color based on scene theme
+            let color;
+            if (Math.random() > 0.3) {
+                // 70% themed colors matching scene
+                color = this.generateThemedColor(sceneHue);
+            } else {
+                // 30% grayscale for variety
+                const shade = Math.floor(Math.random() * 150);
+                color = `rgb(${shade}, ${shade}, ${shade})`;
+            }
 
             this.clutterElements.push({
                 x: x,
                 y: y,
                 size: size,
-                shade: shade,
-                isRect: isRect
+                color: color,
+                shapeType: shapeType, // 0=rect, 1=circle, 2=triangle, 3=line
+                alpha: alpha
             });
         }
+    }
+
+    // Get scene color hue for theming clutter
+    getSceneColorHue() {
+        if (!this.currentScene) return 'brown';
+
+        // Different themes per scene
+        if (this.currentScene.backgroundColor.includes('2f')) return 'brown'; // Workshop
+        if (this.currentScene.backgroundColor.includes('4a')) return 'green'; // Forest
+        return 'brown';
+    }
+
+    // Generate themed color for clutter
+    generateThemedColor(hue) {
+        if (hue === 'brown') {
+            // Workshop browns, tans, dark reds
+            const r = 60 + Math.floor(Math.random() * 100);
+            const g = 40 + Math.floor(Math.random() * 70);
+            const b = 20 + Math.floor(Math.random() * 50);
+            return `rgb(${r}, ${g}, ${b})`;
+        } else if (hue === 'green') {
+            // Forest greens, browns, dark yellows
+            const r = 40 + Math.floor(Math.random() * 80);
+            const g = 60 + Math.floor(Math.random() * 90);
+            const b = 30 + Math.floor(Math.random() * 60);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+        return 'rgb(100, 100, 100)';
     }
 
     // Render the scene
@@ -130,18 +173,31 @@ class SourcingPhase {
 
     // Draw background clutter
     drawClutter() {
-        this.ctx.globalAlpha = 0.15; // Reduced opacity so objects stand out more
-
         // Draw pre-generated clutter elements
         for (let clutter of this.clutterElements) {
-            this.ctx.fillStyle = `rgb(${clutter.shade}, ${clutter.shade}, ${clutter.shade})`;
+            this.ctx.globalAlpha = clutter.alpha;
+            this.ctx.fillStyle = clutter.color;
 
-            if (clutter.isRect) {
-                this.ctx.fillRect(clutter.x, clutter.y, clutter.size, clutter.size);
-            } else {
-                this.ctx.beginPath();
-                this.ctx.arc(clutter.x, clutter.y, clutter.size / 2, 0, Math.PI * 2);
-                this.ctx.fill();
+            switch (clutter.shapeType) {
+                case 0: // Rectangle
+                    this.ctx.fillRect(clutter.x, clutter.y, clutter.size, clutter.size);
+                    break;
+                case 1: // Circle
+                    this.ctx.beginPath();
+                    this.ctx.arc(clutter.x, clutter.y, clutter.size / 2, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    break;
+                case 2: // Triangle
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(clutter.x, clutter.y - clutter.size / 2);
+                    this.ctx.lineTo(clutter.x - clutter.size / 2, clutter.y + clutter.size / 2);
+                    this.ctx.lineTo(clutter.x + clutter.size / 2, clutter.y + clutter.size / 2);
+                    this.ctx.closePath();
+                    this.ctx.fill();
+                    break;
+                case 3: // Line/Rectangle bar
+                    this.ctx.fillRect(clutter.x, clutter.y, clutter.size * 2, clutter.size / 4);
+                    break;
             }
         }
 
@@ -150,9 +206,17 @@ class SourcingPhase {
 
     // Draw a hidden object
     drawObject(obj) {
+        // Draw subtle outer glow to help object stand out slightly
+        this.ctx.globalAlpha = 0.3;
+        this.ctx.fillStyle = obj.color;
+        this.ctx.beginPath();
+        this.ctx.arc(obj.x, obj.y, obj.size / 2 + 3, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.globalAlpha = 1.0;
+
         // Draw shadow
-        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-        this.ctx.shadowBlur = 10;
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+        this.ctx.shadowBlur = 12;
         this.ctx.shadowOffsetX = 3;
         this.ctx.shadowOffsetY = 3;
 
@@ -162,8 +226,8 @@ class SourcingPhase {
         this.ctx.arc(obj.x, obj.y, obj.size / 2, 0, Math.PI * 2);
         this.ctx.fill();
 
-        // Draw highlight border
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        // Draw bright highlight border to make it more findable
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
         this.ctx.lineWidth = 2;
         this.ctx.stroke();
 

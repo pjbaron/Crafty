@@ -1,0 +1,187 @@
+# Development Plan: Crafting Shop Game
+
+## Phase 1: Core Framework
+- Set up project structure and basic game architecture
+- Implement save/load system for player progress
+- Create main game loop state machine (Sourcing → Crafting → Shop phases)
+- Build basic UI framework and navigation between phases
+- Implement day/night cycle and phase transitions
+
+## Phase 2: Sourcing Phase (Clutter/Hidden Object)
+- Create clutter scene rendering system
+  - Load and display background images
+  - Layer hidden objects into scenes
+  - Implement click detection on object boundaries
+- Build object finding mechanics
+  - Track found vs remaining objects
+  - Implement misclick penalty system
+  - Create visual feedback for successful finds
+  - Add object highlighting/glow effects on discovery
+- Design material collection system
+  - Define material types and rarity tiers
+  - Create material inventory data structure
+  - Link found objects to material rewards
+  - Display collected materials at scene completion
+- Create scene progression
+  - Implement scene difficulty tiers
+  - Build scene unlock system based on player level/progress
+  - Design 5-10 initial scenes with varying complexity
+- Add scene selection interface
+  - Show available and locked scenes
+  - Display scene difficulty and potential rewards
+  - Track completion statistics per scene
+
+## Phase 3: Crafting Phase
+- Build recipe system
+  - Define recipe data structure (inputs, outputs, quality ranges)
+  - Create recipe database with 10-15 starter recipes
+  - Implement recipe unlock progression
+- Design crafting interface
+  - Display available materials and quantities
+  - Show recipe requirements and steps
+  - Create visual crafting workspace
+- Implement decision-based crafting mechanics
+  - Build choice system (stabilize vs enhance decisions)
+  - Create quality calculation algorithm
+  - Add risk/reward outcome ranges
+  - Implement visual feedback for crafting progress (color shifts, particles)
+- Create crafting result system
+  - Generate item quality rating (common/uncommon/rare/legendary)
+  - Apply quality multipliers to base item value
+  - Add crafted items to shop inventory
+  - Display crafting summary with quality achieved
+- Add crafting upgrades
+  - Better tools (improve success zones)
+  - Quality bonuses (baseline improvements)
+  - Recipe variety unlocks
+
+## Phase 4: Shop Phase (Automated Sales)
+- Create shop visualization
+  - Design 2D cross-section or isometric shop interior
+  - Implement modular upgrade placement system
+  - Add customer sprite animations (browsing, purchasing)
+- Build inventory management
+  - Display stocked items with quality indicators
+  - Track quantity and automatic restocking
+  - Show which items are selling vs sitting
+- Implement sales simulation engine
+  - Calculate sales rate based on item quality
+  - Factor in shop upgrades and multipliers
+  - Apply reputation bonuses
+  - Process marketing campaign effects
+  - Generate transaction events and notifications
+- Create shop statistics dashboard
+  - Real-time sales counter
+  - Revenue tracking
+  - Customer satisfaction meter
+  - Reputation score display
+  - Daily/weekly sales reports
+- Design upgrade system
+  - Define upgrade categories (display, lighting, layout, decoration, marketing)
+  - Create upgrade data structure with costs and benefits
+  - Implement upgrade purchase interface
+  - Apply visual changes to shop when upgrades purchased
+  - Calculate and apply stat bonuses from upgrades
+- Build upgrade catalog
+  - Display cases (boost luxury item appeal)
+  - Lighting options (affect visibility/ambiance)
+  - Shelving tiers (capacity and presentation)
+  - Flooring and wall treatments
+  - Decorative elements (plants, art, fixtures)
+  - Branding materials (signs, logos)
+  - Marketing campaigns (types and durations)
+
+## Phase 5: VIP Client System
+- Create VIP client framework
+  - Define VIP types and personality traits
+  - Build request generation system
+  - Implement deadline mechanics (no harsh penalties)
+- Design VIP request interface
+  - Show active VIP requests with requirements
+  - Display deadline countdown
+  - Track fulfillment status
+- Implement VIP reward system
+  - Unlock new material sources
+  - Grant premium recipes
+  - Apply publicity boosts to reputation
+  - Trigger special story events or testimonials
+- Create VIP notification system
+  - Alert when VIP arrives
+  - Reminder of upcoming deadlines
+  - Celebration animations for fulfilled requests
+
+## Phase 6: Progression and Meta Systems
+- Build player level system
+  - Experience points from crafting and sales
+  - Level-up rewards and unlocks
+- Implement reputation system
+  - Calculate reputation from quality consistency
+  - Apply reputation multipliers to sales and VIP attraction
+  - Create reputation tier milestones
+- Design achievement system
+  - Track various accomplishments
+  - Award cosmetic shop customizations
+  - Create achievement notification UI
+- Create unlock progression
+  - Gate content behind level/reputation requirements
+  - Design unlock curve for scenes, recipes, upgrades
+  - Balance early vs late game content availability
+- Build currency and economy
+  - Track earned money
+  - Balance costs vs earnings
+  - Implement price scaling as shop grows
+
+## Phase 7: Content Creation
+- Design and source clutter scene artwork
+  - Create or acquire 10-15 background images
+  - Prepare hidden object sprite sets
+  - Ensure visual clarity at various difficulty levels
+- Create material and item artwork
+  - Design icons for all material types
+  - Create crafted item visuals
+  - Develop rarity tier visual treatments
+- Build shop visual assets
+  - Design base shop interior
+  - Create all upgrade visual elements
+  - Develop customer sprite variations
+- Design UI elements and menus
+  - Create consistent visual style
+  - Design buttons, panels, notifications
+  - Develop icon set for navigation and actions
+- Implement audio
+  - Add background music for each phase
+  - Create sound effects for clicks, crafting, sales
+  - Add ambient shop sounds
+
+## Phase 8: Balance and Polish
+- Tune economy balance
+  - Adjust material drop rates
+  - Balance crafting costs vs sale prices
+  - Test upgrade cost progression
+- Refine crafting difficulty
+  - Balance risk/reward in crafting choices
+  - Adjust quality outcome ranges
+  - Test recipe complexity curve
+- Polish shop simulation
+  - Tune sales rates for satisfying progression
+  - Balance upgrade effectiveness
+  - Adjust VIP request frequency and difficulty
+- Add tutorial system
+  - Create phase-by-phase guidance
+  - Implement tooltip system
+  - Design first-time user experience
+- Implement quality of life features
+  - Add batch crafting options
+  - Create quick-view inventory screens
+  - Implement sorting and filtering
+  - Add progress tracking statistics
+- Bug testing and optimization
+  - Test all progression paths
+  - Verify save/load integrity
+  - Optimize performance
+  - Fix edge cases and exploits
+
+## Phase 9: Settings Menu
+- Create settings menu
+  - Audio volume controls
+  - Load/Save management interface

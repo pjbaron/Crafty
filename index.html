@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crafting Shop Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="ui-overlay">
+            <div id="top-bar">
+                <div id="phase-indicator">Phase: <span id="current-phase">Sourcing</span></div>
+                <div id="day-counter">Day: <span id="day-number">1</span></div>
+                <div id="money-display">Gold: <span id="money-amount">0</span></div>
+                <div id="reputation-display">Reputation: <span id="reputation-amount">0</span></div>
+            </div>
+
+            <div id="phase-ui">
+                <!-- Phase-specific UI will be injected here -->
+            </div>
+
+            <div id="bottom-bar">
+                <button id="next-phase-btn" class="btn-primary">Next Phase</button>
+                <button id="save-btn" class="btn-secondary">Save Game</button>
+                <button id="load-btn" class="btn-secondary">Load Game</button>
+            </div>
+        </div>
+
+        <canvas id="game-canvas" width="1280" height="720"></canvas>
+
+        <div id="notification-area"></div>
+    </div>
+
+    <!-- Core game scripts -->
+    <script src="js/saveLoad.js"></script>
+    <script src="js/gameState.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/sourcing.js"></script>
+    <script src="js/crafting.js"></script>
+    <script src="js/shop.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

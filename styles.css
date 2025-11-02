@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2c2c2c;
+    color: #f0f0f0;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    margin: 20px auto;
+    border: 3px solid #444;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#game-canvas {
+    display: block;
+    background-color: #1a1a1a;
+}
+
+#ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#ui-overlay > * {
+    pointer-events: auto;
+}
+
+#top-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+    border-bottom: 2px solid #555;
+}
+
+#top-bar > div {
+    padding: 8px 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#phase-indicator {
+    color: #4CAF50;
+}
+
+#day-counter {
+    color: #FFB74D;
+}
+
+#money-display {
+    color: #FFD700;
+}
+
+#reputation-display {
+    color: #9C27B0;
+}
+
+#phase-ui {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    right: 20px;
+    bottom: 80px;
+    pointer-events: none;
+}
+
+#phase-ui > * {
+    pointer-events: auto;
+}
+
+#bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+    border-top: 2px solid #555;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-secondary {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #1976D2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#notification-area {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    width: 300px;
+    pointer-events: none;
+}
+
+.notification {
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Sourcing Phase UI */
+.sourcing-ui {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.scene-info {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 5px;
+    border: 2px solid #4CAF50;
+}
+
+.objects-found {
+    font-size: 18px;
+    color: #FFD700;
+}
+
+/* Crafting Phase UI */
+.crafting-ui {
+    display: flex;
+    gap: 20px;
+}
+
+.materials-panel, .recipes-panel, .crafting-workspace {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 5px;
+    border: 2px solid #2196F3;
+}
+
+.recipe-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.recipe-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Shop Phase UI */
+.shop-ui {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inventory-panel, .stats-panel {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 5px;
+    border: 2px solid #9C27B0;
+}
+
+.stat-item {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}

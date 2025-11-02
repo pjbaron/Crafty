@@ -143,8 +143,11 @@ class UIManager {
 
     // Create sourcing phase UI
     createSourcingUI() {
+        // Don't show overlay UI during scene selection - it will be shown when a scene starts
         const container = document.createElement('div');
+        container.id = 'sourcing-overlay';
         container.className = 'sourcing-ui';
+        container.style.display = 'none'; // Hidden by default
         container.innerHTML = `
             <div class="scene-info">
                 <h3>Sourcing Phase</h3>
@@ -153,6 +156,22 @@ class UIManager {
             </div>
         `;
         this.elements.phaseUI.appendChild(container);
+    }
+
+    // Show sourcing scene UI
+    showSourcingSceneUI() {
+        const overlay = document.getElementById('sourcing-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+        }
+    }
+
+    // Hide sourcing scene UI
+    hideSourcingSceneUI() {
+        const overlay = document.getElementById('sourcing-overlay');
+        if (overlay) {
+            overlay.style.display = 'none';
+        }
     }
 
     // Create crafting phase UI

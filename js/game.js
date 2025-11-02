@@ -112,14 +112,15 @@ class CraftingShopGame {
         this.ctx.fillStyle = '#1a1a1a';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // Top bar is about 80px, so start below it
         this.ctx.fillStyle = 'white';
         this.ctx.font = 'bold 32px Arial';
-        this.ctx.fillText('Select a Scene', 50, 60);
+        this.ctx.fillText('Select a Scene', 50, 120);
 
         const availableScenes = this.sourcingPhase.getAvailableScenes();
 
         availableScenes.forEach((scene, index) => {
-            const y = 120 + index * 100;
+            const y = 180 + index * 100;
 
             // Scene box
             this.ctx.fillStyle = 'rgba(76, 175, 80, 0.3)';
@@ -144,10 +145,10 @@ class CraftingShopGame {
             this.ctx.fillText(`Objects: ${scene.objects.length}`, 400, y + 65);
         });
 
-        // Instructions
+        // Instructions - bottom bar is about 80px, so place above it
         this.ctx.fillStyle = '#888';
         this.ctx.font = '20px Arial';
-        this.ctx.fillText('Click on a scene to start searching for materials', 50, this.canvas.height - 30);
+        this.ctx.fillText('Click on a scene to start searching for materials', 50, this.canvas.height - 100);
     }
 
     // Handle canvas clicks
@@ -166,9 +167,13 @@ class CraftingShopGame {
                     // Check scene selection
                     const availableScenes = this.sourcingPhase.getAvailableScenes();
                     availableScenes.forEach((scene, index) => {
-                        const sceneY = 120 + index * 100;
+                        const sceneY = 180 + index * 100;
                         if (x >= 50 && x <= 1230 && y >= sceneY && y <= sceneY + 80) {
                             this.sourcingPhase.startScene(scene.id);
+                            // Show the sourcing UI overlay when scene starts
+                            if (this.uiManager) {
+                                this.uiManager.showSourcingSceneUI();
+                            }
                         }
                     });
                 }
@@ -189,8 +194,11 @@ class CraftingShopGame {
         // Phase-specific initialization
         switch (currentPhase) {
             case 'sourcing':
-                // Reset sourcing phase
+                // Reset sourcing phase and hide UI overlay
                 this.sourcingPhase.currentScene = null;
+                if (this.uiManager) {
+                    this.uiManager.hideSourcingSceneUI();
+                }
                 break;
             case 'crafting':
                 // Reset crafting phase

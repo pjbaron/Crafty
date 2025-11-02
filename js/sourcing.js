@@ -95,20 +95,19 @@ class SourcingPhase {
             }
         });
 
-        // Draw found objects counter
-        this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 24px Arial';
-        this.ctx.fillText(`Found: ${this.objectsFound} / ${this.totalObjects}`, 20, 40);
+        // Draw found objects counter - removed from canvas since it's shown in HTML overlay
+        // The HTML UI overlay at the top left shows this information
     }
 
     // Draw background clutter
     drawClutter() {
         const clutterCount = 30;
-        this.ctx.globalAlpha = 0.3;
+        this.ctx.globalAlpha = 0.15; // Reduced opacity so objects stand out more
 
         for (let i = 0; i < clutterCount; i++) {
+            // Avoid top and bottom UI areas
             const x = Math.random() * this.canvas.width;
-            const y = Math.random() * this.canvas.height;
+            const y = 100 + Math.random() * (this.canvas.height - 200); // Keep away from UI bars
             const size = 10 + Math.random() * 30;
             const shade = Math.floor(Math.random() * 100);
 
